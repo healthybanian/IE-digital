@@ -1,0 +1,124 @@
+package com.example.java;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int laterx=0;
+        int latery=0;
+        int laterf=0;
+
+
+        while (true) {
+            String order = getInput("Choose a order:place/move/left/right/report ");
+
+
+            switch (order) {
+                case "place":
+                    int startx = getInput1("Enter position x range 0-4: ");// 0-4
+                    int starty = getInput1("Enter position y range 0-4: ");// 0-4
+                    int startf = getInput1("Enter direction 0 north 1 south 2 east 3 west: ");  // 0-3 0 north 1 south 2 east 3 west
+                    if ((startx <= 4) && (startx >= 0) && (starty >= 0) && (starty <= 4) && (startf >= 0) && (startf <= 3)) {
+                        laterx = startx;
+                        latery = starty;
+                        laterf = startf;
+                    } else {
+                        System.out.println("Unrecognized position");
+                    }
+                    break;
+                case "move":
+                    switch (laterf) {
+                        case 0:
+                            latery++;
+                            if (latery > 4) {
+                                System.out.println("Over boundary must stop");
+                                latery = latery - 1;
+                            }
+                            break;
+                        case 1:
+                            latery--;
+                            if (latery < 0) {
+                                System.out.println("Over boundary must stop");
+                                latery = latery + 1;
+                            }
+                            break;
+                        case 2:
+                            laterx++;
+                            if (laterx >4 ) {
+                                System.out.println("Over boundary must stop");
+                                laterx = laterx - 1;
+                            }
+                            break;
+                        case 3:
+                            laterx--;
+                            if (laterx < 0) {
+                                System.out.println("Over boundary must stop");
+                                laterx = laterx + 1;
+                            }
+                            break;
+                    }
+                    break;
+                case "left":
+                    switch (laterf) {
+                        case 0:
+                            laterf = 3;
+                            break;
+                        case 1:
+                            laterf = 2;
+                            break;
+                        case 2:
+                            laterf = 0;
+                            break;
+                        case 3:
+                            laterf = 1;
+                            break;
+                    }
+                    break;
+                case "right":
+                    switch (laterf) {
+                        case 0:
+                            laterf = 2;
+                            break;
+                        case 1:
+                            laterf = 3;
+                            break;
+                        case 2:
+                            laterf = 1;
+                            break;
+                        case 3:
+                            laterf = 0;
+                            break;
+                    }
+                    break;
+                case "report":
+                    if (laterf == 0) {
+                        System.out.println("X" + laterx + ",Y" + latery + ",NORTH");
+                    } else if (laterf == 1) {
+                        System.out.println("X" + laterx + ",Y" + latery + ",SOUTH");
+                    } else if (laterf == 2) {
+                        System.out.println("X" + laterx + ",Y" + latery + ",EAST");
+                    } else if (laterf == 3) {
+                        System.out.println("X" + laterx + ",Y" + latery + ",WEST");
+                    }
+                    break;
+                default:
+                    System.out.println("Unrecognized order!");
+                    return;
+            }
+        }
+    }
+
+    private static String getInput(String prompt) {
+        System.out.print(prompt);
+        Scanner sc = new Scanner(System.in);
+        return sc.nextLine();
+    }
+    private static int getInput1(String prompt) {
+        System.out.print(prompt);
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
+    }
+
+}
